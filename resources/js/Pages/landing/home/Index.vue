@@ -1,6 +1,9 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-import LandingLayouts from '@/Layouts/LandingLayouts.vue';
+import LandingLayouts from '../../../Layouts/LandingLayouts.vue';
+
+import FirstSection from './first/FirstSection.vue'
+import SecondSection from './second/SecondSection.vue'
 
 // defineProps({
 //     canLogin: {
@@ -22,8 +25,11 @@ import LandingLayouts from '@/Layouts/LandingLayouts.vue';
 
 <template>
 
-<Head title="GJW9" />
+<Head title="Home" />
     <LandingLayouts>
+
+        <FirstSection />
+        <SecondSection />
 
     </LandingLayouts>
 
