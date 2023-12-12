@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class {{ class }} extends Model
 {
     use HasFactory;
+
+    protected $table = '';
+
+    public function Relation()
+    {
+
+    }
+
+    static public function Search($request)
+    {
+
+    }
 }
