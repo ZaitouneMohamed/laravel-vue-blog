@@ -18,12 +18,12 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    $latest_posts = Post::latest()->take(3)->with('Categorie')->get();
-    return Inertia::render('landing/home/Index',[
-        "posts" => $latest_posts,
-    ]);
-})->name("home");
+// Route::get('/', function () {
+//     $latest_posts = Post::latest()->take(3)->with('Categorie')->get();
+//     return Inertia::render('landing/home/Index',[
+//         "posts" => $latest_posts,
+//     ]);
+// })->name("home");
 Route::controller(HomeController::class)->group(function() {
     Route::get('/', 'Home')->name("home");
     Route::get('/post/{post}', 'post')->name("post.details");
