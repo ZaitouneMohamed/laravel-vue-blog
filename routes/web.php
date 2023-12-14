@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Post;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,8 +19,17 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('landing/home/Index');
+    $latest_posts = Post::latest()->take(3)->with('Categorie')->get();
+    return Inertia::render('landing/home/Index',[
+        "posts" => $latest_posts,
+    ]);
 })->name("home");
+Route::controller(HomeController::class)->group(function() {
+    Route::get('/', 'Home')->name("home");
+    Route::get('/post/{post}', 'post')->name("post.details");
+    Route::get('/Categorie/{categorie}', 'PostsOfCategorie')->name("PostsOfCategorie");
+    Route::post('/AddComment', 'AddComment')->name("AddComment");
+});
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
