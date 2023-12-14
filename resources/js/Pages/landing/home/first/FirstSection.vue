@@ -2,36 +2,18 @@
     <section class="section-padding">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="col-lg-4 col-md-4 col-sm-6" v-for="post in posts">
                     <div class="category-item">
                         <div class="category-img">
-                            <a href="blog-single.html"><img src="assets/landing/images/cat/cat-4.jpg" alt="" class="img-fluid w-100"></a>
+                            <Link :href="route('post.details', post)"><img src="assets/landing/images/cat/cat-4.jpg" alt=""
+                                    class="img-fluid w-100"></Link>
                         </div>
                         <div class="content">
-                            <a href="#" class="text-color text-uppercase font-sm letter-spacing font-extra">lifestyle</a>
-                            <h4><a href="blog-single.html">Managing your time In 3 easy steps</a></h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <div class="category-item">
-                        <div class="category-img">
-                            <a href="blog-single.html"><img src="assets/landing/images/cat/cat-2.jpg" alt="" class="img-fluid w-100"></a>
-                        </div>
-                        <div class="content">
-                            <a href="#" class="text-color text-uppercase font-sm letter-spacing font-extra">Fashion</a>
-                            <h4><a href="blog-single.html">The Ultimate Summer Hat Guide</a></h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <div class="category-item">
-                        <div class="category-img">
-                            <a href="blog-single.html"><img src="assets/landing/images/cat/cat-3.jpg" alt="" class="img-fluid w-100"></a>
-                        </div>
-                        <div class="content">
-                            <a href="#" class="text-color text-uppercase font-sm letter-spacing font-extra">Travel</a>
-                            <h4><a href="blog-single.html">The trip you should take this fall</a></h4>
+                            <a href="#" class="text-color text-uppercase font-sm letter-spacing font-extra">{{
+                                post.categorie.name }}</a>
+                            <h4>
+                                <Link :href="route('post.details', post)">{{ post.title }}</Link>
+                            </h4>
                         </div>
                     </div>
                 </div>
@@ -39,3 +21,13 @@
         </div>
     </section>
 </template>
+
+<script setup>
+import { Head, Link } from '@inertiajs/vue3';
+
+defineProps({
+    posts: {
+        type: Array,
+    },
+});
+</script>
