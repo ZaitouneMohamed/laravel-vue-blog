@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Categorie;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -39,6 +41,9 @@ class HandleInertiaRequests extends Middleware
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
+            'categories' => Categorie::all(),
+            'trending_posts' => Post::orderBy("views","desc")->get()->take(3),
+            'randomCategories' => Categorie::inRandomOrder()->withCount("Posts")->take(5)->get(),
         ];
     }
 }
