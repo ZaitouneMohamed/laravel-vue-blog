@@ -19,7 +19,7 @@ import { Link } from '@inertiajs/vue3';
                         <li class="nav-item dropdown  pl-0">
                             <Link class="nav-link dropdown-toggle" :href="route('home')" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Home
+                            Home
                             </Link>
                         </li>
                         <li class="nav-item dropdown">
@@ -28,7 +28,8 @@ import { Link } from '@inertiajs/vue3';
                                 Categories
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                                <Link class="dropdown-item" :href="route('PostsOfCategorie',category)" v-for="category in $page.props.categories" :key="category.id">{{ category.name }}</Link>
+                                <Link class="dropdown-item" :href="route('PostsOfCategorie', category)"
+                                    v-for="category in $page.props.categories" :key="category.id">{{ category.name }}</Link>
                             </div>
                         </li>
 
@@ -120,8 +121,7 @@ import { Link } from '@inertiajs/vue3';
             </div>
         </div>
     </footer>
-
-
-
-    <!--search overlay start-->
+    
+    <!-- scripts -->
 </template>
+
