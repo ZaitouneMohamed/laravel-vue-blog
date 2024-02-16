@@ -1,6 +1,7 @@
 import './bootstrap';
 import '../css/app.css';
 
+import PerfectScrollbar from 'vue3-perfect-scrollbar'
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
@@ -14,6 +15,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         return createApp({ render: () => h(App, props) })
             .use(plugin)
+            .use(PerfectScrollbar)
             .use(ZiggyVue)
             .mount(el);
     },
