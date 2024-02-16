@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Categorie;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -34,6 +36,8 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'topUsers' => User::withCount('posts')->orderByDesc('posts_count')->limit(5)->get(),
+            'categories' => Categorie::take(10)->get(),
         ];
     }
 }
