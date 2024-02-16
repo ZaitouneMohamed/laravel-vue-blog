@@ -16,6 +16,8 @@ defineProps({
     },
 });
 
+const emit = defineEmits()
+
 const form = useForm({
     email: '',
     password: '',
@@ -25,6 +27,7 @@ const form = useForm({
 const submit = () => {
     form.post(route('login'), {
         onFinish: () => form.reset('password'),
+        onSuccess: () => emit('close')
     });
 };
 </script>

@@ -4,7 +4,7 @@
             <div class="container flex flex-col mx-auto md:flex-row md:items-center md:justify-between">
                 <div class="flex items-center justify-between">
                     <div>
-                        <a href="#" class="text-xl font-bold text-gray-800 md:text-2xl">Brand</a>
+                        <Link href="/" class="text-xl font-bold text-gray-800 md:text-2xl">Brand</Link>
                     </div>
                     <div>
                         <button type="button"
@@ -53,7 +53,8 @@
             </div>
         </footer>
     </div>
-
-    <slot />
 </template>
 
+<script setup>
+import { Link } from '@inertiajs/vue3';
+</script>

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Routing\Route;
 
 class PostController extends Controller
 {
@@ -37,7 +39,11 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        $post->load('user', 'comments','comments.user', 'categorie');
+        return Inertia::render('Landing/post/post', [
+            // 'route' => Route::getCurrentRoute()->uri(),
+            'post' => $post
+        ]);
     }
 
     /**
