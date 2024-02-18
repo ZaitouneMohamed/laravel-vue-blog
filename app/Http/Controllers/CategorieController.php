@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Categorie;
 use App\Http\Requests\StoreCategorieRequest;
 use App\Http\Requests\UpdateCategorieRequest;
+use Inertia\Inertia;
 
 class CategorieController extends Controller
 {
@@ -13,7 +14,10 @@ class CategorieController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Categorie::withCount('posts')->latest()->paginate(5);
+        return Inertia::render('Admin/Categorie/index', [
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -29,7 +33,8 @@ class CategorieController extends Controller
      */
     public function store(StoreCategorieRequest $request)
     {
-        //
+        Categorie::create($request->all());
+        return redirect()->route('admin.categorie.index');
     }
 
     /**
@@ -53,7 +58,8 @@ class CategorieController extends Controller
      */
     public function update(UpdateCategorieRequest $request, Categorie $categorie)
     {
-        //
+        $categorie->update($request->all());
+        return redirect()->route('admin.categorie.index');
     }
 
     /**
@@ -61,6 +67,7 @@ class CategorieController extends Controller
      */
     public function destroy(Categorie $categorie)
     {
-        //
+        $categorie->delete();
+        return redirect()->route('admin.categorie.index');
     }
 }
