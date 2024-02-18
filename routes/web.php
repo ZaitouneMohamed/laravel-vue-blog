@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Post;
@@ -26,17 +27,12 @@ Route::get('/', function () {
     ]);
 });
 
-Route::resource("post", PostController::class);
-Route::get('/admin', function () {
-    return Inertia::render('Admin/Home', [
-        'data' => User::paginate(10),
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'route' => Route::getCurrentRoute()->uri(),
-        'phpVersion' => PHP_VERSION,
-    ]);
+Route::resource("post", PostController::class)->only("show");
+
+Route::controller(HomeController::class)->group(function () {
+    Route::post("AddComment", 'AddComment')->name("addNewComment");
 });
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -49,3 +45,4 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/admin.php';
