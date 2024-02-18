@@ -51,19 +51,22 @@
             <!-- Comment Form -->
             <div class="px-4 mt-8" v-if="$page.props.auth.user">
                 <h2 class="text-xl font-semibold mb-4">Leave a Comment</h2>
-                <form action="#" method="POST">
-                    <div class="mb-4">
-                        <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Your Name:</label>
-                        <input type="text" id="name" name="name"
-                            class="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none" required>
-                    </div>
+                <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                    {{ form.progress.percentage }}%
+                </progress>
+                <form @submit.prevent="form.post('/AddComment')">
                     <div class="mb-4">
                         <label for="comment" class="block text-gray-700 text-sm font-bold mb-2">Your Comment:</label>
                         <textarea id="comment" name="comment" rows="5"
-                            class="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none" required></textarea>
+                            class="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none"
+                            v-model="form.body"></textarea>
+                        <div v-if="form.errors.body">
+                            {{ form.errors.body }}
+                        </div>
+
                     </div>
                     <div class="mb-6">
-                        <button type="submit"
+                        <button type="submit" :disabled="form.processing"
                             class="w-full px-4 py-2 text-white bg-green-700 rounded-md hover:bg-green-600 focus:bg-green-800 focus:outline-none">Post
                             Comment</button>
                     </div>
@@ -75,7 +78,6 @@
                     data-ripple-light="true" @click="toggleIsShow">
                     Button
                 </button>
-                {{ isShow }}
                 <Modal :show="isShow">
                     <button>close</button>
                     <Login />
@@ -110,8 +112,8 @@
 import HomeLayouts from '../../../Layouts/NormalLayouts.vue';
 import Modal from '../../../Components/Modal.vue';
 import Login from '../../../Pages/Auth/Login.vue';
-import { Head, Link } from '@inertiajs/vue3';
-import { computed ,ref } from 'vue';
+import { Head, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 const props = defineProps({
     post: {
@@ -120,13 +122,17 @@ const props = defineProps({
     },
 });
 
+const form = useForm({
+    body: null,
+    post_id: props.post.id,
+})
+
 const isShow = ref(false);
 
 const toggleIsShow = () => {
     isShow.value = !isShow.value;
 };
 
-const isAuth = computed(() => props.hasOwnProperty('auth') && props.auth.user);
 
 </script>
 
