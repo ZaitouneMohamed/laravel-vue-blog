@@ -1,10 +1,10 @@
-
 <script lang="ts" setup>
 import AdminLayout from '../../../Layouts/AdminLayouts.vue';
-import { Head , useForm } from '@inertiajs/vue3';
+import { Head, useForm, router } from '@inertiajs/vue3';
 import Pagination from '../../../Components/Pagination.vue';
 import Modal from '../../../Components/Modal.vue';
 import InputError from '../../../Components/InputError.vue';
+import EditModal from './Edit.vue';
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -13,6 +13,26 @@ const props = defineProps({
         required: true,
     },
 });
+
+const isEditModalOpen = ref(false);
+const selectedCategory = ref(null);
+
+const openEditModal = (category_id) => {
+
+    selectedCategory.value = category_id;
+    isEditModalOpen.value = true;
+    console.log(selectedCategory.value + ' ' + isEditModalOpen.value);
+};
+
+const closeEditModal = () => {
+    isEditModalOpen.value = false;
+};
+
+function destroy(id) {
+    if (confirm("Are you sure you want to Delete")) {
+        router.delete(route("admin.categorie.destroy", id));
+    }
+}
 
 const form = useForm({
     name: null,
@@ -27,6 +47,7 @@ const toggleIsShow = () => {
 </script>
 
 <template>
+
     <Head title="Categorie" />
 
     <AdminLayout>
@@ -67,6 +88,10 @@ const toggleIsShow = () => {
                         </div>
                     </div> -->
                     <!-- ... -->
+                    <Modal :show="isEditModalOpen">
+                        <EditModal :categorie="selectedCategory"></EditModal>
+                    </Modal>
+                    <!-- <EditModal   @close="closeEditModal"></EditModal> -->
                     <Modal :show="isShow">
                         <button>close</button>
                         <div class="flex items-center justify-center p-12">
@@ -81,8 +106,8 @@ const toggleIsShow = () => {
                                         </label>
                                         <input type="text" name="guest" id="guest" v-model="form.name"
                                             class="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                                            <InputError class="mt-2" :message="form.errors.name" />
-                                        </div>
+                                        <InputError class="mt-2" :message="form.errors.name" />
+                                    </div>
                                     <div>
                                         <button
                                             class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
@@ -146,16 +171,26 @@ const toggleIsShow = () => {
                                             {{ item.posts_count }}
                                         </p>
                                     </td>
-                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                    <!--  <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                         <p class="text-gray-900 whitespace-no-wrap">
-                                            <!-- {{ item.posts_count }} -->
+                                            {{ item.posts_count }}
                                         </p>
-                                        <!-- <span
+                                        <span
                                             class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                                             <span aria-hidden
                                                 class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
                                             <span class="relative">Activo</span>
-                                        </span> -->
+                                        </span>
+                                    </td>-->
+                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        <button @click="openEditModal(item)"
+                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                            Edit
+                                        </button>
+                                        <button @click="destroy(item.id)" v-if="item.posts_count == 0"
+                                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                            Delete
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>

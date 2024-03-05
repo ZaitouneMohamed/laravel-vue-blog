@@ -15,7 +15,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::with(['user', 'categorie', 'comments'])->latest()->paginate(5);
+        return Inertia::render('Admin/Posts/Index', [
+            'posts' => $posts
+        ]);
     }
 
     /**
@@ -39,7 +42,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $post->load('user', 'comments','comments.user', 'categorie');
+        $post->load('user', 'comments', 'comments.user', 'categorie');
         return Inertia::render('Landing/post/post', [
             // 'route' => Route::getCurrentRoute()->uri(),
             'post' => $post

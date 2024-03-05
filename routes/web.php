@@ -31,6 +31,7 @@ Route::resource("post", PostController::class)->only("show");
 
 Route::controller(HomeController::class)->group(function () {
     Route::post("AddComment", 'AddComment')->name("addNewComment");
+    Route::get("categories/{id}", 'GetPostsOfCategorie')->name("GetPostsOfCategorie");
 });
 
 

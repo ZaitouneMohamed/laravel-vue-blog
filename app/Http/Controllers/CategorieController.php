@@ -42,7 +42,10 @@ class CategorieController extends Controller
      */
     public function show(Categorie $categorie)
     {
-        //
+        return Inertia::render('Admin/Categorie/Edit', [
+            'categorie' => $categorie
+        ]);
+        // return response()->json(array('categorie' => $categorie));
     }
 
     /**
