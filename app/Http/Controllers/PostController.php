@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -15,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['user', 'categorie', 'comments'])->latest()->paginate(5);
+        $posts = Post::with(['user', 'categorie', 'Image'])->latest()->paginate(5);
         return Inertia::render('Admin/Posts/Index', [
             'posts' => $posts
         ]);
@@ -34,7 +35,14 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //
+        $post = Post::create([
+            'title' => $request->title,
+            'body' => $request->body,
+            'user_id' => Auth::user()->id,
+            'categorie_id' => $request->categorie_id,
+
+        ]);
+        return redirect()->route('admin.post.index')->with('success', 'post created with success');
     }
 
     /**

@@ -38,6 +38,7 @@ class HandleInertiaRequests extends Middleware
             ],
             'topUsers' => User::withCount('posts')->orderByDesc('posts_count')->limit(5)->get(),
             'categories' => Categorie::take(10)->get(),
+            'allCategories' => Categorie::all('name' , 'id')
         ];
     }
 }
