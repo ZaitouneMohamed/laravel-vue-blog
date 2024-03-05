@@ -37,6 +37,10 @@ class Post extends Model
     {
         return Carbon::parse($value)->diffForHumans();
     }
+    public function Image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
 
     public function getRouteKeyName()
     {

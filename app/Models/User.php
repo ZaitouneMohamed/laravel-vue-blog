@@ -48,4 +48,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+    public function Image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
 }
