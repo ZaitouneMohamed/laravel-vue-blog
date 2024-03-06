@@ -70,7 +70,12 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $post->update([
+            'title' => $request->title,
+            'body' => $request->body,
+            'categorie_id' => $request->categorie_id,
+        ]);
+        return redirect()->route('admin.post.index')->with('success', 'post updated with success');
     }
 
     /**
@@ -78,6 +83,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('admin.post.index')->with('success', 'post deleted with success');
     }
 }

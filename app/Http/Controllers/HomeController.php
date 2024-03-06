@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorie;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -22,11 +23,12 @@ class HomeController extends Controller
         ]);
         return redirect()->back();
     }
-    public function GetPostsOfCategorie($id)
+    public function GetPostsOfCategorie(Categorie $categorie)
     {
-        $posts = Post::where('categorie_id', $id)->with(["user", "categorie", "comments"])->paginate(10);
-        return Inertia::render('Landing/GetPosts/GetPosts' , [
-            'posts'=> $posts
+        $posts = $categorie->posts()->paginate(10);
+        $posts->load(["user", "categorie", "comments"]);
+        return Inertia::render('Landing/GetPosts/GetPosts', [
+            'posts' => $posts
         ]);
     }
 }
