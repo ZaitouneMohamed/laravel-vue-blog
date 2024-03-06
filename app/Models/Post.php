@@ -46,4 +46,8 @@ class Post extends Model
     {
         return 'slug';
     }
+    public function getFullImageAttribute()
+    {
+        return asset("images/posts/" . $this->image->url);
+    }
 }

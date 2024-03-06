@@ -34,10 +34,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::get("categories/{categorie}", 'GetPostsOfCategorie')->name("GetPostsOfCategorie");
 });
 
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::permanentRedirect('/dashboard', '/admin');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -15,7 +15,7 @@
                     <label for="guest" class="mb-3 block text-base font-medium text-[#07074D]">
                         Body
                     </label>
-                    <textarea name="" id="" cols="30" v-model="form.body"
+                    <textarea id="" cols="30" v-model="form.body"
                         class="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                         rows="10"></textarea>
                     <InputError class="mt-2" :message="form.errors.body" />
@@ -27,18 +27,19 @@
                     <select v-model="form.categorie_id"
                         class="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                         id="">
-                        <option v-for="(item, index) in categories" :key="index" :value="item.id">  {{ item.name }}</option>
+                        <option v-for="(item, index) in categories" :key="index" :value="item.id"> {{ item.name }}
+                        </option>
                     </select>
                     <InputError class="mt-2" :message="form.errors.categorie_id" />
                 </div>
-                <!-- <div class="mb-5">
+                <div class="mb-5">
                     <label for="guest" class="mb-3 block text-base font-medium text-[#07074D]">
                         Image
                     </label>
-                    <input type="file" name="guest" id="guest"
+                    <input type="file" @input="form.image = $event.target.files[0]"
                         class="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                     <InputError class="mt-2" :message="form.errors.image" />
-                </div> -->
+                </div>
                 <div>
                     <button
                         class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
@@ -63,6 +64,7 @@ const form = useForm({
     title: null,
     body: null,
     categorie_id: null,
+    image: null,
 })
 
 

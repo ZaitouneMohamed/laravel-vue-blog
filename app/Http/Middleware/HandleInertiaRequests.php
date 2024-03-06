@@ -36,6 +36,10 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'flash' => [
+                'message' => fn () => $request->session()->get('message'),
+                'success' => fn () => $request->session()->get('success'),
+            ],
             'topUsers' => User::withCount('posts')->orderByDesc('posts_count')->limit(5)->get(),
             'categories' => Categorie::take(10)->get(),
             'allCategories' => Categorie::all('name' , 'id')

@@ -6,6 +6,8 @@ use Inertia\Inertia;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Image;
+use App\Services\ImagesServices;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,6 +16,12 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
+    protected $imagesservices;
+
+    public function __construct(ImagesServices $ImagesServices)
+    {
+        $this->imagesservices = $ImagesServices;
+    }
     public function index()
     {
         $posts = Post::with(['user', 'categorie', 'Image'])->latest()->paginate(5);
@@ -40,8 +48,12 @@ class PostController extends Controller
             'body' => $request->body,
             'user_id' => Auth::user()->id,
             'categorie_id' => $request->categorie_id,
-
         ]);
+        if ($request->has('image')) {
+            $image = $this->imagesservices->uploadImage($request->image, "posts");
+            $new_image = new Image(["url" => $image]);
+            $post->Image()->save($new_image);
+        }
         return redirect()->route('admin.post.index')->with('success', 'post created with success');
     }
 

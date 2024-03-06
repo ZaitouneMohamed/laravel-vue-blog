@@ -31,6 +31,9 @@ const isShow = ref(false);
                 <div>
                     <h2 class="text-2xl font-semibold leading-tight">Posts</h2>
                 </div>
+                <div v-if="$page.props.flash.success" >
+                    {{ $page.props.flash.success }}
+                </div>
 
                 <div class="grid grid-cols-3">
                     <!-- <Modal :show="isEditModalOpen">
@@ -42,8 +45,7 @@ const isShow = ref(false);
                     </Modal>
                     <div>
                         <div class="block relative">
-                            <button
-                                @click="toggleIsShow"
+                            <button @click="toggleIsShow"
                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 Add New Post
                             </button>
@@ -90,7 +92,7 @@ const isShow = ref(false);
                                         </p>
                                     </td>
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        <img :src="item.image ? item.image.url : ''" alt="" width="70px">
+                                        <img :src="item.image ? '/images/posts/' + item.image.url : ''" alt="" width="70px">
                                     </td>
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                         <p class="text-gray-900 whitespace-no-wrap">
