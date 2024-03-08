@@ -2,6 +2,7 @@ import './bootstrap';
 import '../css/app.css';
 
 import PerfectScrollbar from 'vue3-perfect-scrollbar'
+import { i18nVue } from 'laravel-vue-i18n';
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
@@ -16,6 +17,12 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(PerfectScrollbar)
+            .use(i18nVue, {
+                resolve: async lang => {
+                    const langs = import.meta.glob('../../lang/*.json');
+                    return await langs[`../../lang/${lang}.json`]();
+                }
+            })
             .use(ZiggyVue)
             .mount(el);
     },
