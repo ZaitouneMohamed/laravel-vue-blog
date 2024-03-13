@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Categorie;
 use App\Http\Requests\StoreCategorieRequest;
 use App\Http\Requests\UpdateCategorieRequest;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class CategorieController extends Controller
@@ -12,11 +13,12 @@ class CategorieController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Categorie::withCount('posts')->latest()->paginate(5);
+        $categories = Categorie::getData();
         return Inertia::render('Admin/Categorie/index', [
-            'categories' => $categories
+            'categories' => $categories,
+            'filter' => $request->only(["search"])
         ]);
     }
 
