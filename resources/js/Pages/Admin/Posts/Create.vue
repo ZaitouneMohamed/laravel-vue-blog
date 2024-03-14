@@ -36,9 +36,10 @@
                     <label for="guest" class="mb-3 block text-base font-medium text-[#07074D]">
                         Image
                     </label>
-                    <input type="file" @input="form.image = $event.target.files[0]"
+                    <input type="file" @input="form.image = $event.target.files[0]" @change="handleImageChange"
                         class="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                     <InputError class="mt-2" :message="form.errors.image" />
+                    <img v-if="imageUrl" :src="imageUrl" alt="Selected Image">
                 </div>
                 <div>
                     <button
@@ -67,5 +68,18 @@ const form = useForm({
     image: null,
 })
 
+const imageUrl = ref(null);
+
+function handleImageChange(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+            imageUrl.value = reader.result;
+        };
+        reader.readAsDataURL(file);
+        form.image = file;
+    }
+}
 
 </script>
