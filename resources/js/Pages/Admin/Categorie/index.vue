@@ -29,9 +29,9 @@ const closeEditModal = () => {
     isEditModalOpen.value = false;
 };
 
-function destroy(id) {
+function destroy(slug) {
     if (confirm("Are you sure you want to Delete")) {
-        router.delete(route("admin.categorie.destroy", id));
+        Inertia.delete(route("admin.categorie.destroy", slug));
     }
 }
 
@@ -195,7 +195,7 @@ watch(search, (value) => {
                                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                                 Edit
                                             </button>
-                                            <button @click="destroy(item.id)" v-if="item.posts_count == 0"
+                                            <button @click="destroy(item)" v-if="item.posts_count == 0"
                                                 class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                                                 Delete
                                             </button>
