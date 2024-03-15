@@ -47,11 +47,11 @@ const toggleIsShow = () => {
 
 let search = ref(props.filter.search);
 
-watch(search, (value) => {
-    Inertia.get(route('admin.categorie.index'), { search: value, },
-        { preserveState: true, preserveScroll: true, }
-    );
-});
+function SearchFunction() {
+    router.get(route('admin.categorie.index', {
+        search: search.value
+    }));
+}
 
 </script>
 
@@ -65,7 +65,7 @@ watch(search, (value) => {
             <div class="container mx-auto px-4 sm:px-8">
                 <div class="py-8">
                     <div>
-                        <h2 class="text-2xl font-semibold leading-tight">Users</h2>
+                        <h2 class="text-2xl font-semibold leading-tight">Categories</h2>
                     </div>
                     <Modal :show="isShow">
                         <button>close</button>
@@ -142,7 +142,7 @@ watch(search, (value) => {
                                     </path>
                                 </svg>
                             </span>
-                            <input placeholder="Search" v-model="search"
+                            <input placeholder="Search" v-model="search" @keyup="SearchFunction"
                                 class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
                         </div>
                     </div>
