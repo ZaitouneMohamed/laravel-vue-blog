@@ -28,6 +28,14 @@ class HomeController extends Controller
         $posts = $categorie->posts()->paginate(10);
         $posts->load(["user", "categorie", "comments"]);
         return Inertia::render('Landing/GetPosts/GetPosts', [
+            'posts' => $posts,
+            "categorie" => $categorie->name
+        ]);
+    }
+    public function GetAllPosts()
+    {
+        $posts = Post::with(["user", "categorie"])->withCount("comments")->paginate(20);
+        return Inertia::render('Landing/GetPosts/GetPosts', [
             'posts' => $posts
         ]);
     }

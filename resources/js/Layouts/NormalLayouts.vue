@@ -19,8 +19,10 @@
                     </div>
                 </div>
                 <div class="flex-col hidden md:flex md:flex-row md:-mx-4">
-                    <a href="#" class="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">Home</a>
-                    <a href="#" class="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">Blog</a>
+                    <Link :href="route('home')" class="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">Home
+                    </Link>
+                    <Link :href="route('GetAllPosts')" class="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">
+                    Blog</Link>
                     <a href="#" class="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">About us</a>
                 </div>
             </div>

@@ -25,13 +25,14 @@ Route::get('/', function () {
         'route' => Route::getCurrentRoute()->uri(),
         'posts' => Post::with(["user", "categorie", "comments"])->take(5)->get()
     ]);
-});
+})->name('home');
 
 Route::resource("post", PostController::class)->only("show");
 
 Route::controller(HomeController::class)->group(function () {
     Route::post("AddComment", 'AddComment')->name("addNewComment");
     Route::get("categories/{categorie}", 'GetPostsOfCategorie')->name("GetPostsOfCategorie");
+    Route::get("posts", 'GetAllPosts')->name("GetAllPosts");
 });
 
 Route::permanentRedirect('/dashboard', '/admin');

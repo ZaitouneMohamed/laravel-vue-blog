@@ -11,6 +11,9 @@ const props = defineProps({
     posts: {
         type: Array,
         required: true,
+    },
+    categorie : {
+        type: String,
     }
 });
 
@@ -19,6 +22,7 @@ let selectedFilter = 'latest';
 </script>
 
 <template>
+
     <Head title="Categorie" />
 
     <HomeLayouts>
@@ -26,7 +30,7 @@ let selectedFilter = 'latest';
             <div class="container flex justify-between mx-auto">
                 <div class="w-full lg:w-8/12">
                     <div class="flex items-center justify-between">
-                        <h1 class="text-xl font-bold text-gray-700 md:text-2xl">Post</h1>
+                        <h1 class="text-xl font-bold text-gray-700 md:text-2xl">Post <span v-if="categorie">of {{ categorie }}</span>  </h1>
                         <div>
                             <select v-model="selectedFilter"
                                 class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
@@ -38,14 +42,15 @@ let selectedFilter = 'latest';
                     <div class="mt-6" v-for="item in posts.data">
                         <div class="max-w-4xl px-10 py-6 mx-auto bg-white rounded-lg shadow-md">
                             <div class="flex items-center justify-between"><span class="font-light text-gray-600">{{
-                                item.created_at }}</span><Link :href="(route('GetPostsOfCategorie', item.categorie.id))"
+                                item.created_at }}</span>
+                                <Link :href="(route('GetPostsOfCategorie', item.categorie))"
                                     class="px-2 py-1 font-bold text-gray-100 bg-gray-600 rounded hover:bg-gray-500">{{
-                                        item.categorie.name }}</Link>
+                                item.categorie.name }}</Link>
                             </div>
                             <div class="mt-2">
                                 <Link :href="route('post.show', item)"
                                     class="text-2xl font-bold text-gray-700 hover:underline">{{
-                                        item.title }}</Link>
+                                item.title }}</Link>
                                 <p class="mt-2 text-gray-600">{{ item.title.substring(0, 500) + ".." }}</p>
                             </div>
                             <div class="flex items-center justify-between mt-4">
@@ -65,4 +70,5 @@ let selectedFilter = 'latest';
             </div>
         </div>
         <Pagination :pagination="posts.links" /> <br><br>
-    </HomeLayouts></template>
+    </HomeLayouts>
+</template>
