@@ -23,7 +23,7 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Landing/Index', [
         'route' => Route::getCurrentRoute()->uri(),
-        'posts' => Post::with(["user", "categorie", "comments"])->take(5)->get()
+        'posts' => Post::take(6)->inRandomOrder()->get()
     ]);
 })->name('home');
 

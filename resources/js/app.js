@@ -17,12 +17,6 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(PerfectScrollbar)
-            .use(i18nVue, {
-                resolve: async lang => {
-                    const langs = import.meta.glob('../../lang/*.json');
-                    return await langs[`../../lang/${lang}.json`]();
-                }
-            })
             .use(ZiggyVue)
             .mount(el);
     },

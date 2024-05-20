@@ -24,15 +24,13 @@ class PostController extends Controller
     }
     public function index()
     {
-        $posts = Post::with(['user', 'categorie', 'Image'])->latest()->paginate(5);
+        $posts = Post::latest()->paginate(5);
+        $tableHeaders = ['title', 'full_image', 'body', 'categorie_name'];
         return Inertia::render('Admin/Posts/Index', [
-            'posts' => $posts
+            'posts' => $posts,
+            'headers' => $tableHeaders
         ]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //

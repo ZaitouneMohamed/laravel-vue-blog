@@ -25,8 +25,7 @@ class HomeController extends Controller
     }
     public function GetPostsOfCategorie(Categorie $categorie)
     {
-        $posts = $categorie->posts()->paginate(10);
-        $posts->load(["user", "categorie", "comments"]);
+        $posts = $categorie->posts()->latest()->paginate(10);
         return Inertia::render('Landing/GetPosts/GetPosts', [
             'posts' => $posts,
             "categorie" => $categorie->name
@@ -34,7 +33,7 @@ class HomeController extends Controller
     }
     public function GetAllPosts()
     {
-        $posts = Post::with(["user", "categorie"])->withCount("comments")->paginate(20);
+        $posts = Post::withCount("comments")->latest()->paginate(21);
         return Inertia::render('Landing/GetPosts/GetPosts', [
             'posts' => $posts
         ]);

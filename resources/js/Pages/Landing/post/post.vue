@@ -1,4 +1,5 @@
 <template>
+
     <Head :title="post.title" />
     <HomeLayouts>
 
@@ -10,7 +11,7 @@
                         {{ post.title }}
                     </h2>
                     <a href="#" class="py-2 text-green-700 inline-flex items-center justify-center mb-2">
-                        {{ post.categorie.name }}
+                        {{ post.categorie_name }}
                     </a>
                 </div>
 
@@ -37,7 +38,8 @@
                         </div>
                         <p class="text-gray-700 py-3">
                             Mike writes about technology
-                            Yourself required no at thoughts delicate landlord it be. Branched dashwood do is whatever it.
+                            Yourself required no at thoughts delicate landlord it be. Branched dashwood do is whatever
+                            it.
                         </p>
                         <button
                             class="px-2 py-1 text-gray-100 bg-green-700 flex w-full items-center justify-center rounded">
@@ -73,15 +75,29 @@
                 </form>
             </div>
             <div class="px-4 mt-8" v-else>
-                <button
-                    class="middle none center mr-4 rounded-lg bg-green-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                    data-ripple-light="true" @click="toggleIsShow">
-                    Button
-                </button>
-                <Modal :show="isShow">
-                    <button>close</button>
-                    <Login />
-                </Modal>
+                <fwb-button @click="showModal">
+                    Login 
+                </fwb-button>
+                <fwb-modal v-if="isShowModal" @close="closeModal">
+                    <template #header>
+                        <div class="flex items-center text-lg">
+                            Terms of Service
+                        </div>
+                    </template>
+                    <template #body>
+                        <Login />
+                    </template>
+                    <template #footer>
+                        <div class="flex justify-between">
+                            <fwb-button @click="closeModal" color="alternative">
+                                Decline
+                            </fwb-button>
+                            <fwb-button @click="closeModal" color="green">
+                                I accept
+                            </fwb-button>
+                        </div>
+                    </template>
+                </fwb-modal>
             </div>
             <div class="px-4 mt-8">
                 <h2 class="text-xl font-semibold mb-4">Comments</h2>
@@ -110,10 +126,10 @@
 
 <script setup>
 import HomeLayouts from '../../../Layouts/NormalLayouts.vue';
-import Modal from '../../../Components/Modal.vue';
 import Login from '../../../Pages/Auth/Login.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { FwbButton, FwbModal } from 'flowbite-vue'
 
 const props = defineProps({
     post: {
@@ -127,12 +143,15 @@ const form = useForm({
     post_id: props.post.id,
 })
 
-const isShow = ref(false);
 
-const toggleIsShow = () => {
-    isShow.value = !isShow.value;
-};
+const isShowModal = ref(false)
+
+function closeModal() {
+    isShowModal.value = false
+}
+function showModal() {
+    isShowModal.value = true
+}
 
 
 </script>
-

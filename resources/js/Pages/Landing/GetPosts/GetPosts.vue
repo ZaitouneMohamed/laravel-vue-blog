@@ -12,7 +12,7 @@ const props = defineProps({
         type: Array,
         required: true,
     },
-    categorie : {
+    categorie: {
         type: String,
     }
 });
@@ -26,7 +26,7 @@ let selectedFilter = 'latest';
     <Head title="Categorie" />
 
     <HomeLayouts>
-        <div class="px-6 py-8">
+        <!-- <div class="px-6 py-8">
             <div class="container flex justify-between mx-auto">
                 <div class="w-full lg:w-8/12">
                     <div class="flex items-center justify-between">
@@ -39,32 +39,74 @@ let selectedFilter = 'latest';
                             </select>
                         </div>
                     </div>
-                    <div class="mt-6" v-for="item in posts.data">
-                        <div class="max-w-4xl px-10 py-6 mx-auto bg-white rounded-lg shadow-md">
-                            <div class="flex items-center justify-between"><span class="font-light text-gray-600">{{
-                                item.created_at }}</span>
-                                <Link :href="(route('GetPostsOfCategorie', item.categorie))"
-                                    class="px-2 py-1 font-bold text-gray-100 bg-gray-600 rounded hover:bg-gray-500">{{
-                                item.categorie.name }}</Link>
-                            </div>
-                            <div class="mt-2">
-                                <Link :href="route('post.show', item)"
-                                    class="text-2xl font-bold text-gray-700 hover:underline">{{
-                                item.title }}</Link>
-                                <p class="mt-2 text-gray-600">{{ item.title.substring(0, 500) + ".." }}</p>
-                            </div>
-                            <div class="flex items-center justify-between mt-4">
-                                <Link :href="route('post.show', item)" class="text-blue-500 hover:underline">Read more
-                                </Link>
-                                <div>
-                                    <Link :href="route('post.show', item)" class="flex items-center"><img
-                                        src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=731&amp;q=80"
-                                        alt="avatar" class="hidden object-cover w-10 h-10 mx-4 rounded-full sm:block">
-                                    <h1 class="font-bold text-gray-700 hover:underline">{{ item.user.name }}</h1>
+                    <div v-for="item in posts.data">
+                        <div
+                            class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                            <Link :href="route('post.show', item)">
+                                <img class="rounded-t-lg"
+                                    src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="" />
+                            </Link>
+                            <div class="p-5">
+                                <Link :href="route('post.show', item)">
+                                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{
+                                        item.title }}</h5>
                                     </Link>
-                                </div>
+                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ item.body.substring(0, 500) +
+                                    ".." }}</p>
+                                <Link :href="(route('GetPostsOfCategorie', item.categorie_slug))"
+                                    class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                                {{
+                                    item.categorie_name }}</Link>
+                                <a href="#"
+                                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    Read more
+                                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                    </svg>
+                                </a>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <br>
+        <br>
+        <h1 class="text-xl font-bold text-gray-700 md:text-2xl text-center" v-if="categorie">Post <span>of {{ categorie
+                }}</span> </h1>
+        <h1 v-else class="text-xl font-bold text-gray-700 md:text-2xl text-center">All Posts </h1>
+        <br>
+        <br>
+        <div class="container mx-auto grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div v-for="item in posts.data">
+
+                <div
+                    class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    <Link :href="route('post.show', item)">
+                    <img class="rounded-t-lg" :src="item.full_image" alt="" />
+                    </Link>
+                    <div class="p-5">
+                        <Link :href="route('post.show', item)">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{
+                            item.title }}</h5>
+                        </Link>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ item.body.substring(0, 500) +
+                            ".." }}</p>
+                        <Link :href="(route('GetPostsOfCategorie', item.categorie_slug))"
+                            class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                        {{
+                            item.categorie_name }}</Link>
+                        <a href="#"
+                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Read more
+                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                            </svg>
+                        </a>
                     </div>
                 </div>
             </div>
